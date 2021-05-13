@@ -1,0 +1,7 @@
+feedbacksform.ajax_form_submit:
+  path: '/feedbacksform/ajax-form'
+  defaults:
+    _form: '\Drupal\feedbacksform\Form\AjaxFormSubmit'
+    _title: 'Users feedbacks'
+  requirements:
+    _permission: 'access content'

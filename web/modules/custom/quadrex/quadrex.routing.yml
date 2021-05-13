@@ -1,0 +1,7 @@
+quadrex.feedbacks:
+  path: '/quadrex/feedbacks'
+  defaults:
+    _title: 'Leave your feedback about us!'
+    _form: '\Drupal\quadrex\Form\FeedbacksForm'
+  requirements:
+    _permission: 'access content'

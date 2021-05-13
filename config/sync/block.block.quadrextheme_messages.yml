@@ -1,0 +1,22 @@
+uuid: 2e0dea3b-d360-457f-b1ab-fd43d44a432d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - quadrextheme
+_core:
+  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
+id: quadrextheme_messages
+theme: quadrextheme
+region: header
+weight: -50
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 31086ddc-92e6-4d11-b417-0dab54e772c0
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - quadrextheme
+_core:
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: quadrextheme_help
+theme: quadrextheme
+region: help
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

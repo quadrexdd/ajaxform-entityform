@@ -1,0 +1,22 @@
+uuid: e638fd14-5cae-48cd-abd9-b7974f58d6ed
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - quadrextheme
+_core:
+  default_config_hash: fNNLN48MSGSLiqwIFywCuxH2Dk_IxDbaP0kYhg_IPrg
+id: quadrextheme_content
+theme: quadrextheme
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

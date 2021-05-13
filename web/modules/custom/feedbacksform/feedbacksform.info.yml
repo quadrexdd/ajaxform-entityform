@@ -1,0 +1,6 @@
+name: feedbacksform
+description: 'Custom form for feedbacks'
+type: module
+core: 8.x
+version: 1.x
+package: Custom
