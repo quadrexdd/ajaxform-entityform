@@ -1,6 +1,0 @@
-name: Quadrex Custom Page
-type: module
-description: 'Custom page with users feedback'
-package: Custom
-version: 1.0
-core: 8.x
