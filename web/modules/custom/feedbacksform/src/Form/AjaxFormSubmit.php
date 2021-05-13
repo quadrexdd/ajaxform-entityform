@@ -51,6 +51,7 @@ class AjaxFormSubmit extends FormBase {
       '#title' => $this->t('Phone number'),
       '#description' => $this->t('Please, enter your phone number'),
       '#required' => TRUE,
+      '#maxlength' => '10',
     ];
     $form['feedback'] = [
       '#type' => 'textfield',
@@ -63,7 +64,7 @@ class AjaxFormSubmit extends FormBase {
       '#title' => t('Avatar picture (maximum upload size 2MB)'),
       '#upload_validators' => array(
         'file_validate_extensions' => array('png jpg jpeg'),
-        'file_validate_size' => array(2000000),
+        'file_validate_size' => array(2097152),
       ),
       '#upload_location' => 'public://avatar-pictures'
     ];
@@ -72,7 +73,7 @@ class AjaxFormSubmit extends FormBase {
       '#title' => t('Feedback picture (maximum upload size 5MB)'),
       '#upload_validators' => array(
         'file_validate_extensions' => array('png jpg jpeg'),
-        'file_validate_size' => array(5000000),
+        'file_validate_size' => array(3145728),
       ),
       '#upload_location' => 'public://feedback-pictures'
     ];
@@ -90,11 +91,12 @@ class AjaxFormSubmit extends FormBase {
     if (strlen ($form_state -> getValue('first_name')) <= '2' || (strlen($form_state->getValue('first_name')) >='100')) {
       $form_state->setErrorByName('first_name', 'The valid firstname should contain between 2 and 100 characters');
     }
+    if (strlen ($form_state->getValue('phone_number')) <10 || !is_numeric($form_state->getValue('phone_number'))){
+      $form_state->setErrorByName('phone_number', 'Correct Ukrainian phone number must be in format 0-xxx-xxx-xxx');
+    }
   }
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
     \Drupal::messenger()->addMessage('Thank you for feedback!');
   }
 }
-
-
