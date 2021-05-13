@@ -1,0 +1,10 @@
+uuid: badd7de2-1dd3-4c0c-b15a-744e2c3f83c5
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+id: block_content.token
+label: Token
+targetEntityType: block_content
+cache: true

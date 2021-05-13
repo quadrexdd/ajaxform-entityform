@@ -16,6 +16,7 @@ module:
   dblog: 0
   dynamic_page_cache: 0
   editor: 0
+  feedbacksform: 0
   field: 0
   field_ui: 0
   file: 0
@@ -26,19 +27,22 @@ module:
   link: 0
   menu_link_content: 0
   menu_ui: 0
+  metatag: 0
+  metatag_views: 0
   node: 0
   options: 0
   page_cache: 0
   path: 0
   path_alias: 0
-  quadrex: 0
   quickedit: 0
   rdf: 0
   search: 0
   shortcut: 0
   system: 0
   taxonomy: 0
+  telephone: 0
   text: 0
+  token: 0
   toolbar: 0
   tour: 0
   update: 0

@@ -1,13 +1,13 @@
 schemas:
   bootstrap: 8000
   quadrextheme: 8000
-cdn_provider: ''
+cdn_provider: jsdelivr
 _core:
   default_config_hash: 71vTnk5szuOQRTsOR-S5bjCzPvkxtx_eVGMqYa_mcqc
 favicon:
   mimetype: image/vnd.microsoft.icon
   path: ''
-  url: 'http://custom-form.localhost/themes/contrib/bootstrap/favicon.ico'
+  url: 'http://custom-form.localhost/themes/custom/quadrextheme/favicon.ico'
   use_default: true
 features:
   comment_user_picture: true
@@ -18,3 +18,11 @@ logo:
   path: ''
   url: ''
   use_default: true
+table_responsive: '-1'
+cdn_theme: bootstrap
+cdn_cache_ttl_versions: '604800'
+cdn_cache_ttl_themes: '604800'
+cdn_cache_ttl_assets: '0'
+cdn_cache_ttl_library: '0'
+reset_http_request_cache: ''
+table: ''
