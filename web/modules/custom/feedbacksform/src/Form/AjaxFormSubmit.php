@@ -47,13 +47,10 @@ class AjaxFormSubmit extends FormBase {
       '#required' => TRUE,
     ];
     $form['phone_number'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
       '#title' => $this->t('Phone number'),
       '#description' => $this->t('Please, enter your phone number'),
       '#required' => TRUE,
-//      '#attributes' => array(
-//        'type' => 'number',
-//      ),
     ];
     $form['feedback'] = [
       '#type' => 'textfield',
