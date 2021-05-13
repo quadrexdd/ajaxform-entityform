@@ -1,0 +1,54 @@
+<?php
+/**
+ * create table feedbacks
+ */
+/**
+ * Implements hook_schema().
+ */
+function feedbacksform_schema() {
+  $schema['feedbacks'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'first_name' => array(
+        'type' => 'varchar',
+        'length' => '99',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'email_address' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'phone_number' => array(
+        'type' => 'varchar',
+        'length' => '10',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'feedback' => array(
+        'type' => 'varchar',
+        'length' => '1000',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'profile_picture_id' => array(
+        'type' => 'int',
+        'length' => '20',
+      ),
+      'feedback_picture_id' => array(
+        'type' => 'int',
+        'length' => '20',
+      ),
+    ),
+    'primary key' => array(
+      'id',
+    ),
+  );
+  return $schema;
+}

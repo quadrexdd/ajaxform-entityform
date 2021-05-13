@@ -6,11 +6,10 @@
 
 namespace Drupal\feedbacksform\Form;
 
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Drupal\file\Entity\File;
+
 
 /**
  * Form with modal window.
@@ -97,6 +96,23 @@ class AjaxFormSubmit extends FormBase {
   }
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $profile_picture = $form_state->getValue('profile_image');
+    $feedback_picture = $form_state->getValue('feedback_image');
+    $data = array(
+      'first_name' => $form_state->getValue('first_name'),
+      'email_address' => $form_state->getValue('email_address'),
+      'phone_number' => $form_state->getValue('phone_number'),
+      'feedback' => $form_state->getValue('feedback'),
+      'profile_picture_id' => $profile_picture[0],
+      'feedback_picture_id' => $feedback_picture[0],
+    );
+    $profile_file = File::load($profile_picture[0]);
+    $profile_file->setPermanent();
+    $profile_file->save();
+    $feedback_file = File::load($feedback_picture[0]);
+    $feedback_file->setPermanent();
+    $feedback_file->save();
+    \Drupal::database()->insert('feedbacks')->fields($data)->execute();
     \Drupal::messenger()->addMessage('Thank you for feedback!');
   }
 }
