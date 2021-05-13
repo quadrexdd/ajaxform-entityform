@@ -32,7 +32,7 @@ class AjaxFormSubmit extends FormBase {
     $form['first_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('First name'),
-      '#desctiption' => $this->t('Enter your First name. Note that the First name must be at least 3 characters in length'),
+      '#desctiption' => $this->t('Enter your First name.'),
       '#required' => TRUE,
       '#ajax' => [
         'callback' => '::validateFirstNameAjax',
@@ -95,31 +95,6 @@ class AjaxFormSubmit extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     \Drupal::messenger()->addMessage('Thank you for feedback!');
   }
-  public function ajaxSubmitCallback(array &$form, FormStateInterface $form_state) {
-    $ajax_response = new AjaxResponse();
-    $message = [
-      '#theme' => 'status_messages',
-      '#message_list' => \Drupal::messenger()->addMessage(''),
-      '#status_headings' => [
-        'status' => t('Status message'),
-        'error' => t('Error message'),
-        'warning' => t('Warning message'),
-      ],
-    ];
-    $messages = \Drupal::service('renderer')->render($message);
-    $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
-    return $ajax_response;
-  }
-//  public function validateFirstNameAjax (array &$form, FormStateInterface $form_state) {
-//    $response = new AjaxResponse();
-//    if (strlen($form_state->getValue('first_name')) <= '2' || (strlen($form_state->getValue('first_name')) >='100')) {
-//      $response->addCommand(new HtmlCommand('.first-name-validation-message', 'The first name should contain minimum 2 characters and not greater then 100'));
-//    }
-//    else {
-//      $response->addCommand(new HtmlCommand('.first-name-validation-message', ''));
-//    }
-//    return $response;
-//  }
 }
 
 
