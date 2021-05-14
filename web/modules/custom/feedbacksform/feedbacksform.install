@@ -40,12 +40,10 @@ function feedbacksform_schema() {
       'profile_picture_id' => array(
         'type' => 'int',
         'length' => '20',
-        'not null' => FALSE,
       ),
       'feedback_picture_id' => array(
         'type' => 'int',
         'length' => '20',
-        'not null' => FALSE,
       ),
     ),
     'primary key' => array(

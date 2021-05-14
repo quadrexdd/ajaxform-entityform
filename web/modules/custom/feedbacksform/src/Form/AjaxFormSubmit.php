@@ -65,7 +65,7 @@ class AjaxFormSubmit extends FormBase {
         'file_validate_extensions' => array('png jpg jpeg'),
         'file_validate_size' => array(2097152),
       ),
-      '#upload_location' => 'public://avatar-pictures'
+      '#upload_location' => 'public://avatar-pictures',
     ];
     $form['feedback_image'] = [
       '#type' => 'managed_file',
