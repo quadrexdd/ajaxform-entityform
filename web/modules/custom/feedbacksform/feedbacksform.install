@@ -37,14 +37,6 @@ function feedbacksform_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
-      'profile_picture_id' => array(
-        'type' => 'int',
-        'length' => '20',
-      ),
-      'feedback_picture_id' => array(
-        'type' => 'int',
-        'length' => '20',
-      ),
     ),
     'primary key' => array(
       'id',
