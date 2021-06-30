@@ -8,12 +8,6 @@ namespace Drupal\feedbacksform\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\file\Entity\File;
-use Drupal\Component\Utility\Html;
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\CssCommand;
-use Drupal\Core\Ajax\HtmlCommand;
-use Drupal\Core\Ajax\InvokeCommand;
 
 
 /**
@@ -29,14 +23,13 @@ class AjaxFormSubmit extends FormBase {
   }
 
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['#prefix'] = '<div id="feedbacks-form-inner">';
+    $form['#suffix'] = '</div>';
     $form['first_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('First name'),
       '#desctiption' => $this->t('Enter your First name.'),
       '#required' => TRUE,
-      '#attributes' => [
-        'name' => 'firstname',
-      ],
     ];
     $form['email_address'] = [
       '#type' => 'email',
@@ -63,26 +56,16 @@ class AjaxFormSubmit extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Submit Feedback'),
-      '#ajax' => [
-        'callback' => '::AjaxValidateForm',
-        'event' => 'change',
-        'progress' => array(
-          'type' => 'throbber',
-          'message' => t('Verifying...'),
-          ),
-      ],
-      '#suffix' => '<div class="ajax-validate-form-error"></div>',
     ];
-    $form['#cache']['max-age'] = 0;
     return $form;
   }
+
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    $name_value = $form_state->getValue('first_name');
-    if (strlen($name_value) <= 2) {
-      $form_state->setErrorByName('first_name', 'Why are you gay?');
+    $first_name=$form_state->getValue('first_name');
+    if(strlen($first_name) <=2 && strlen($first_name)>= 100) {
+      $form_state->setErrorByName('first_name', 'Enter correct first name');
     }
   }
-
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $data = array(
       'first_name' => $form_state->getValue('first_name'),

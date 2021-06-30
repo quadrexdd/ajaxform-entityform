@@ -3,5 +3,6 @@ feedbacksform.ajax_form_submit:
   defaults:
     _form: '\Drupal\feedbacksform\Form\AjaxFormSubmit'
     _title: 'Users feedbacks'
+    _controller: '\Drupal\feedbacksform\Controller\DisplayTableController::index'
   requirements:
     _permission: 'access content'
