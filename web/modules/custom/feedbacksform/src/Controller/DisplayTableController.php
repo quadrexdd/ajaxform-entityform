@@ -3,7 +3,6 @@
 namespace Drupal\feedbacksform\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\feedbacksform\Form\AjaxFormSubmit;
 
 /**
  * Class DisplayTableController
@@ -20,9 +19,10 @@ class DisplayTableController extends ControllerBase
       'first_name' => t('first name'),
       'email' => t('Email'),
       'phone' => t('phone'),
+      'date' => t('Submit date'),
     );
     $query = \Drupal::database()->select('feedbacks', 'm');
-    $query->fields('m', ['id', 'first_name', 'email_address', 'phone_number']);
+    $query->fields('m', ['id', 'first_name', 'email_address', 'phone_number', 'submit_date']);
     $results = $query->execute()->fetchAll();
     $rows = array();
     foreach ($results as $data) {
@@ -33,6 +33,7 @@ class DisplayTableController extends ControllerBase
         'first_name' => $data->first_name,
         'email' => $data->email_address,
         'phone_number' => $data->phone_number,
+        'submit_date' => $data->submit_date,
       );
 
     }

@@ -37,6 +37,12 @@ function feedbacksform_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
+      'submit_date' => array(
+        'type' => 'varchar',
+        'length' => '1000',
+        'not null' => TRUE,
+        'default' => '',
+      ),
     ),
     'primary key' => array(
       'id',

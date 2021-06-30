@@ -53,6 +53,13 @@ class AjaxFormSubmit extends FormBase {
       '#required' => TRUE,
       '#allowed_tags' => Xss::getHtmlTagList(),
     ];
+    $get_current_time=\Drupal::time()->getCurrentTime();
+    date_default_timezone_set('Europe/Kiev');
+    $current_time = date('m/d/Y H:i:s', $get_current_time);
+    $form['submit_date'] = [
+      '#type' => 'hidden',
+      '#value' => $current_time,
+    ];
     $form['actions'] = [
       '#type' => 'actions',
     ];
@@ -75,6 +82,7 @@ class AjaxFormSubmit extends FormBase {
       'email_address' => $form_state->getValue('email_address'),
       'phone_number' => $form_state->getValue('phone_number'),
       'feedback' => $form_state->getValue('feedback'),
+      'submit_date' => $form_state->getValue('submit_date'),
     );
     \Drupal::database()->insert('feedbacks')->fields($data)->execute();
     \Drupal::messenger()->addMessage('Thank you for feedback!');
