@@ -8,6 +8,7 @@ namespace Drupal\feedbacksform\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Xss;
 
 
 /**
@@ -30,6 +31,7 @@ class AjaxFormSubmit extends FormBase {
       '#title' => $this->t('First name'),
       '#desctiption' => $this->t('Enter your First name.'),
       '#required' => TRUE,
+      '#allowed_tags' => Xss::getHtmlTagList(),
     ];
     $form['email_address'] = [
       '#type' => 'email',
@@ -49,6 +51,7 @@ class AjaxFormSubmit extends FormBase {
       '#title' => $this->t('Feedback'),
       '#description' => $this->t('Please, enter your feedback'),
       '#required' => TRUE,
+      '#allowed_tags' => Xss::getHtmlTagList(),
     ];
     $form['actions'] = [
       '#type' => 'actions',
