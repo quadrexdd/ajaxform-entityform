@@ -37,6 +37,16 @@ function feedbacksform_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
+      'fid_avatar_image' => array(
+        'type' => 'int',
+        'length' => 20,
+        'not null' => FALSE,
+      ),
+      'fid_feedback_image' => array(
+        'type' => 'int',
+        'length' => 20,
+        'not null' => FALSE,
+      ),
       'submit_date' => array(
         'type' => 'varchar',
         'length' => '1000',

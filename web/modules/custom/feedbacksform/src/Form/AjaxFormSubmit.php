@@ -9,6 +9,7 @@ namespace Drupal\feedbacksform\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Xss;
+use Drupal\file\Entity\File;
 
 
 /**
@@ -53,6 +54,26 @@ class AjaxFormSubmit extends FormBase {
       '#required' => TRUE,
       '#allowed_tags' => Xss::getHtmlTagList(),
     ];
+    $form['avatar_image'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Avatar image'),
+      '#description' => $this->t('You may upload your avatar image'),
+      '#upload_location' => 'public://',
+      '#upload_validators' => array(
+        'file_validate_extensions' => array('png jpg jpeg'),
+        'file_validate_size' => array(2097152),
+      ),
+    ];
+    $form['feedback_image'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Feedback image'),
+      '#description' => $this->t('You may upload your feedback image'),
+      '#upload_location' => 'public://',
+      '#upload_validators' => array(
+        'file_validate_extensions' => array('png jpg jpeg'),
+        'file_validate_size' => array(5242880),
+      ),
+    ];
     $form['actions'] = [
       '#type' => 'actions',
     ];
@@ -73,13 +94,27 @@ class AjaxFormSubmit extends FormBase {
     $get_current_time=\Drupal::time()->getCurrentTime();
     date_default_timezone_set('Europe/Kiev');
     $current_time = date('m/d/Y H:i:s', $get_current_time);
+    $avatar_image = $form_state->getValue('avatar_image');
+    $feedback_image = $form_state->getValue('feedback_image');
     $data = array(
       'first_name' => $form_state->getValue('first_name'),
       'email_address' => $form_state->getValue('email_address'),
       'phone_number' => $form_state->getValue('phone_number'),
       'feedback' => $form_state->getValue('feedback'),
+      'fid_avatar_image' => $avatar_image[0],
+      'fid_feedback_image' => $feedback_image[0],
       'submit_date' => $current_time,
     );
+    $avatar_image_file = File::load($avatar_image[0]);
+    if ($avatar_image_file) {
+      $avatar_image_file->setPermanent();
+      $avatar_image_file->save();
+    }
+    $feedback_image_file = File::load($feedback_image[0]);
+    if ($feedback_image_file) {
+      $feedback_image_file->setPermanent();
+      $feedback_image_file->save();
+    }
     \Drupal::database()->insert('feedbacks')->fields($data)->execute();
     \Drupal::messenger()->addMessage('Thank you for feedback!');
   }
