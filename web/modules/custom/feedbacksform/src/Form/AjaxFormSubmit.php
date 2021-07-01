@@ -10,6 +10,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\file\Entity\File;
+use Drupal\Core\Database\Database;
 
 
 /**
@@ -25,6 +26,14 @@ class AjaxFormSubmit extends FormBase {
   }
 
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $conn = Database::getConnection();
+    $data = array();
+    if(isset($_GET['id'])) {
+      $query = $conn->select('feedbacks', 'm')
+        ->condition('id', $_GET['id'])
+        ->fields('m');
+      $data = $query->execute()->fetchAssoc();
+    }
     $form['#prefix'] = '<div id="feedbacks-form-inner">';
     $form['#suffix'] = '</div>';
     $form['first_name'] = [
@@ -32,6 +41,7 @@ class AjaxFormSubmit extends FormBase {
       '#title' => $this->t('First name'),
       '#desctiption' => $this->t('Enter your First name.'),
       '#required' => TRUE,
+      '#default_value' => (isset($data['first_name'])) ? $data['first_name'] : '',
       '#allowed_tags' => Xss::getHtmlTagList(),
     ];
     $form['email_address'] = [
@@ -39,12 +49,14 @@ class AjaxFormSubmit extends FormBase {
       '#title' => $this->t('E-mail'),
       '#description' => $this->t('Please enter your e-mail address'),
       '#required' => TRUE,
+      '#default_value' => (isset($data['email_address'])) ? $data['email_address'] : '',
     ];
     $form['phone_number'] = [
       '#type' => 'tel',
       '#title' => $this->t('Phone number'),
       '#description' => $this->t('Please, enter your phone number'),
       '#required' => TRUE,
+      '#default_value' => (isset($data['phone_number'])) ? $data['phone_number'] : '',
       '#maxlength' => '10',
     ];
     $form['feedback'] = [
@@ -52,10 +64,12 @@ class AjaxFormSubmit extends FormBase {
       '#title' => $this->t('Feedback'),
       '#description' => $this->t('Please, enter your feedback'),
       '#required' => TRUE,
+      '#default_value' => (isset($data['feedback'])) ? $data['feedback'] : '',
       '#allowed_tags' => Xss::getHtmlTagList(),
     ];
     $form['avatar_image'] = [
       '#type' => 'managed_file',
+      '#default_value' => (isset($data['fid_avatar_image'])) ? $data['fid_avatar_image'] : '',
       '#title' => $this->t('Avatar image'),
       '#description' => $this->t('You may upload your avatar image'),
       '#upload_location' => 'public://',
@@ -66,6 +80,7 @@ class AjaxFormSubmit extends FormBase {
     ];
     $form['feedback_image'] = [
       '#type' => 'managed_file',
+      '#default_value' => (isset($data['fid_feedback_image'])) ? $data['fid_feedback_image'] : '',
       '#title' => $this->t('Feedback image'),
       '#description' => $this->t('You may upload your feedback image'),
       '#upload_location' => 'public://',
@@ -114,6 +129,13 @@ class AjaxFormSubmit extends FormBase {
     if ($feedback_image_file) {
       $feedback_image_file->setPermanent();
       $feedback_image_file->save();
+    }
+    if (isset($_GET['id'])) {
+      // update data in database
+      \Drupal::database()->update('feedbacks')->fields($data)->condition('id', $_GET['id'])->execute();
+    } else {
+      // insert data to database
+      \Drupal::database()->insert('feedbacks')->fields($data)->execute();
     }
     \Drupal::database()->insert('feedbacks')->fields($data)->execute();
     \Drupal::messenger()->addMessage('Thank you for feedback!');

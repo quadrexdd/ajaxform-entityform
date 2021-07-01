@@ -3,7 +3,9 @@
 namespace Drupal\feedbacksform\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\file\Entity\File;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
 /**
  * Class DisplayTableController
  * @package Drupal\mymodule\Controller
@@ -23,12 +25,18 @@ class DisplayTableController extends ControllerBase
       'date' => t('Submit date'),
       'avatar' => t('Avatar image'),
       'feedback_image' => t ('Feedback image'),
+      'delete' => t('Delete'),
+      'edit' => t('Edit'),
     );
     $query = \Drupal::database()->select('feedbacks', 'm');
     $query->fields('m', ['id', 'first_name', 'email_address', 'phone_number', 'feedback', 'submit_date', 'fid_avatar_image', 'fid_feedback_image']);
     $results = $query->execute()->fetchAll();
     $rows = array();
     foreach ($results as $data) {
+      $url_delete = Url::fromRoute('feedbacksform.delete_form', ['id' => $data->id], []);
+      $url_edit = Url::fromRoute('feedbacksform.ajax_form_submit', ['id' => $data->id], []);
+      $linkDelete = Link::fromTextAndUrl('Delete', $url_delete);
+      $linkEdit = Link::fromTextAndUrl('Edit', $url_edit);
 
       //get data
       $rows[] = array(
@@ -40,6 +48,8 @@ class DisplayTableController extends ControllerBase
         'submit_date' => $data->submit_date,
         'avatar_image'=> $data->fid_avatar_image,
         'feedback_image'=>$data->fid_feedback_image,
+        'delete' => $linkDelete,
+        'edit' =>  $linkEdit,
       );
 
     }
