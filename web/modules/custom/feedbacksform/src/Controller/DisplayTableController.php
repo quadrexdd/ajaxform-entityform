@@ -2,7 +2,10 @@
 
 namespace Drupal\feedbacksform\Controller;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\OpenModalDialogCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Database\Database;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 
@@ -61,5 +64,18 @@ class DisplayTableController extends ControllerBase
       '#empty' => t('No data found, sorry bro!'),
     ];
     return $form;
+  }
+  public function editFeedbackAjax($id) {
+
+    $conn = Database::getConnection();
+    $query = $conn->select('feedbacks', 'm');
+    $query->condition('id', $id)->fields('m');
+    $record = $query->execute()->fetchAssoc();
+
+    $render_array = \Drupal::formBuilder()->getForm('Drupal\feedbacksform\Form\AjaxFormSubmit',$record);
+    $response = new AjaxResponse();
+    $response->addCommand(new OpenModalDialogCommand('Edit Form', $render_array, ['width' => '800']));
+
+    return $response;
   }
 }
