@@ -11,6 +11,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\file\Entity\File;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 /**
@@ -133,11 +135,14 @@ class AjaxFormSubmit extends FormBase {
     if (isset($_GET['id'])) {
       // update data in database
       \Drupal::database()->update('feedbacks')->fields($data)->condition('id', $_GET['id'])->execute();
+      $url = new Url('feedbacksform.ajax_form_submit');
+      $response = new RedirectResponse($url->toString());
+      $response->send();
+      \Drupal::messenger()->addMessage('Successfully edited!');
     } else {
       // insert data to database
       \Drupal::database()->insert('feedbacks')->fields($data)->execute();
+      \Drupal::messenger()->addMessage('Thank you for feedback!');
     }
-    \Drupal::database()->insert('feedbacks')->fields($data)->execute();
-    \Drupal::messenger()->addMessage('Thank you for feedback!');
   }
 }
