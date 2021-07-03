@@ -34,7 +34,7 @@ class DisplayTableController extends ControllerBase
     $rows = array();
     foreach ($results as $data) {
       $url_delete = Url::fromRoute('feedbacksform.delete_form', ['id' => $data->id], []);
-      $url_edit = Url::fromRoute('feedbacksform.ajax_form_submit', ['id' => $data->id], []);
+      $url_edit = Url::fromRoute('feedbacksform.edit_form', ['id' => $data->id], []);
       $linkDelete = Link::fromTextAndUrl('Delete', $url_delete);
       $linkEdit = Link::fromTextAndUrl('Edit', $url_edit);
 
