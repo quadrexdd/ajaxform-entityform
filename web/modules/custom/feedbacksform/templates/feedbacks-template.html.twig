@@ -1,0 +1,22 @@
+<div class="feedbacks__inner">
+  {% for row in rows %}
+    <div class="feedbacks__item">
+      <div class="feedbacks__item-id">
+        {{ row.id }}
+      </div>
+      <div class="feedbacks__item-user-data">
+        {{ row.first_name }}
+        {{ row.fid_avatar_image }}
+        {{ row.submit_date }}
+      </div>
+      <div class="feedbacks__item-content">
+        {{ row.feedback }}
+        {{ row.fid_feedbackimage }}
+      </div>
+      <div class="feedbacks__item-contact-info">
+        {{ row.email_address }}
+        {{ row.phone_number }}
+      </div>
+    </div>
+  {% endfor %}
+</div>

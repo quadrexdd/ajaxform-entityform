@@ -16,63 +16,20 @@ class DisplayTableController extends ControllerBase
 
   public function index()
   {
-    //create table header
-    $header_table = array(
-      'id' => t('ID'),
-      'first_name' => t('First name'),
-      'email' => t('Email'),
-      'phone' => t('Phone'),
-      'feedback' => t('Feedback text'),
-      'date' => t('Submit date'),
-      'avatar' => t('Avatar image'),
-      'feedback_image' => t ('Feedback image'),
-      'delete' => t('Delete'),
-      'edit' => t('Edit'),
-    );
+
     $query = \Drupal::database()->select('feedbacks', 'm');
     $query->fields('m', ['id', 'first_name', 'email_address', 'phone_number', 'feedback', 'submit_date', 'fid_avatar_image', 'fid_feedback_image']);
-    $results = $query->execute()->fetchAll();
+    $result = $query->execute()->fetchAllAssoc('id');
     $rows = array();
-    foreach ($results as $data) {
-      $url_delete = Url::fromRoute('feedbacksform.delete_form', ['id' => $data->id], []);
-      $url_edit = Url::fromRoute('feedbacksform.edit_form', ['id' => $data->id], []);
-      $linkDelete = Link::fromTextAndUrl('Delete', $url_delete);
-      $linkEdit = Link::fromTextAndUrl('Edit', $url_edit);
-      if ($data->fid_avatar_image) {
-        $avatar_image = File::load($data->fid_avatar_image)->url();
-        }
-      else {
-        $avatar_image = 'http://custom-form.localhost/sites/default/files/l60Hf.png';
-      }
-      if ($data->fid_feedback_image) {
-        $feedback_image = File::load($data->fid_avatar_image)->url();
-      }
-      else {
-        $feedback_image = null;
-      }
-
-      //get data
-      $rows[] = array(
-        'id' => $data->id,
-        'first_name' => $data->first_name,
-        'email' => $data->email_address,
-        'phone_number' => $data->phone_number,
-        'feedback' => $data->feedback,
-        'submit_date' => $data->submit_date,
-        'avatar_image'=> $avatar_image,
-        'feedback_image'=> $feedback_image,
-        'delete' => $linkDelete,
-        'edit' =>  $linkEdit,
-      );
-
+    foreach ($result as $row => $content) {
+      $rows[] = array('id' => $content->id, 'first_name' => $content->first_name, 'email_address' => $content->email_address, 'phone_number' => $content->phone_number,
+        'feedback' => $content->feedback, 'submit_date' => $content->submit_date, 'fid_avatar_image' => $content->fid_avatar_image,
+        'fid_feedbackimage' => $content->fid_feedbackimage);
     }
     // render table
-    $form['table'] = [
-      '#type' => 'table',
-      '#header' => $header_table,
+    return [
+      '#theme' => 'feedbacks_template',
       '#rows' => $rows,
-      '#empty' => t('No data found, sorry bro!'),
     ];
-    return $form;
   }
 }

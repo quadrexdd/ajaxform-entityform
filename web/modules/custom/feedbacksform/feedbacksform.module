@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function feedbacksform_theme($existing, $type, $theme, $path) {
+  return [
+    'feedbacks_template' => [
+      'variables' => ['rows' => 'rows'],
+    ],
+  ];
+}
