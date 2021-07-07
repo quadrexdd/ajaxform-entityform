@@ -5,6 +5,7 @@ namespace Drupal\feedbacksform\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 
 /**
  * Class DisplayTableController
@@ -46,8 +47,8 @@ class DisplayTableController extends ControllerBase
         'phone_number' => $data->phone_number,
         'feedback' => $data->feedback,
         'submit_date' => $data->submit_date,
-        'avatar_image'=> $data->fid_avatar_image,
-        'feedback_image'=>$data->fid_feedback_image,
+        'avatar_image'=> File::load($data->fid_avatar_image)->url(),
+        'feedback_image'=> File::load($data->fid_feedback_image)->url(),
         'delete' => $linkDelete,
         'edit' =>  $linkEdit,
       );
