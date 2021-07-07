@@ -38,6 +38,18 @@ class DisplayTableController extends ControllerBase
       $url_edit = Url::fromRoute('feedbacksform.edit_form', ['id' => $data->id], []);
       $linkDelete = Link::fromTextAndUrl('Delete', $url_delete);
       $linkEdit = Link::fromTextAndUrl('Edit', $url_edit);
+      if ($data->fid_avatar_image) {
+        $avatar_image = File::load($data->fid_avatar_image)->url();
+        }
+      else {
+        $avatar_image = 'http://custom-form.localhost/sites/default/files/l60Hf.png';
+      }
+      if ($data->fid_feedback_image) {
+        $feedback_image = File::load($data->fid_avatar_image)->url();
+      }
+      else {
+        $feedback_image = null;
+      }
 
       //get data
       $rows[] = array(
@@ -47,8 +59,8 @@ class DisplayTableController extends ControllerBase
         'phone_number' => $data->phone_number,
         'feedback' => $data->feedback,
         'submit_date' => $data->submit_date,
-        'avatar_image'=> File::load($data->fid_avatar_image)->url(),
-        'feedback_image'=> File::load($data->fid_feedback_image)->url(),
+        'avatar_image'=> $avatar_image,
+        'feedback_image'=> $feedback_image,
         'delete' => $linkDelete,
         'edit' =>  $linkEdit,
       );
