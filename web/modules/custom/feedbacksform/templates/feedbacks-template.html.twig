@@ -6,16 +6,20 @@
       </div>
       <div class="feedbacks__item-user-data">
         {{ row.first_name }}
-        {{ row.fid_avatar_image }}
+        <img src="{{ row.avatar_image }}" alt="avatar" width="100px" height="100px">
         {{ row.submit_date }}
       </div>
       <div class="feedbacks__item-content">
         {{ row.feedback }}
-        {{ row.fid_feedbackimage }}
+        <img src="{{ row.feedback_image }}" alt="feedback image" width="100px" height="100px">
       </div>
       <div class="feedbacks__item-contact-info">
         {{ row.email_address }}
         {{ row.phone_number }}
+      </div>
+      <div class="feedbacks__item-crud">
+        {{ row.edit }}
+        {{ row.delete }}
       </div>
     </div>
   {% endfor %}
