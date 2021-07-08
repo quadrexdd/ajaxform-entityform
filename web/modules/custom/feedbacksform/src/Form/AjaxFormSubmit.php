@@ -6,9 +6,7 @@
 
 namespace Drupal\feedbacksform\Form;
 
-use Drupal\Core\Ajax\AddCssCommand;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Form\FormBase;
@@ -16,8 +14,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
 
 class AjaxFormSubmit extends FormBase {
 
