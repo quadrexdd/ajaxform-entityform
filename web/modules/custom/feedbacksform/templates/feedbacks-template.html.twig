@@ -25,7 +25,9 @@
       </div>
       <div class="feedbacks__item-content">
         {{ row.feedback }}
-        <img src="{{ row.feedback_image }}" alt="feedback image" width="100px" height="100px">
+        {% if row.feedback_image is defined and row.feedback_image is not null %}
+          <img src="{{ row.feedback_image }}" alt="feedback image" width="100px" height="100px">
+        {% endif %}
       </div>
       <div class="feedbacks__item-contact-info">
         {{ row.email_address }}
