@@ -75,7 +75,7 @@ class EditForm extends FormBase {
     ];
     $form['avatar_image'] = [
       '#type' => 'managed_file',
-      '#default_value' => (isset($data['fid_avatar_image'])) ? $data['fid_avatar_image'] : [],
+      '#default_value' => (isset($data['fid_avatar_image'])) ? [$data['fid_avatar_image']] : [],
       '#title' => $this->t('Avatar image'),
       '#description' => $this->t('You may upload your avatar image'),
       '#upload_location' => 'public://',
@@ -86,7 +86,7 @@ class EditForm extends FormBase {
     ];
     $form['feedback_image'] = [
       '#type' => 'managed_file',
-      '#default_value' => (isset($data['fid_feedback_image'])) ? $data['fid_feedback_image'] : [],
+      '#default_value' => (isset($data['fid_feedback_image'])) ? [$data['fid_feedback_image']] : [],
       '#title' => $this->t('Feedback image'),
       '#description' => $this->t('You may upload your feedback image'),
       '#upload_location' => 'public://',
