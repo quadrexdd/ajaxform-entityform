@@ -33,14 +33,13 @@ class DisplayTableController extends ControllerBase
         $avatar_image = 'http://custom-form.localhost/sites/default/files/l60Hf.png';
       }
       if ($content->fid_feedback_image) {
-        $feedback_image = File::load($content->fid_avatar_image)->url();
+        $feedback_image = File::load($content->fid_feedback_image)->url();
       }
       else {
         $feedback_image = null;
       }
       $rows[] = array('id' => $content->id, 'first_name' => $content->first_name, 'email_address' => $content->email_address, 'phone_number' => $content->phone_number,
-        'feedback' => $content->feedback, 'submit_date' => $content->submit_date, 'fid_avatar_image' => $content->fid_avatar_image,
-        'fid_feedbackimage' => $content->fid_feedbackimage, 'avatar_image' => $avatar_image, 'feedback_image' => $feedback_image, 'delete' => $linkDelete,
+        'feedback' => $content->feedback, 'submit_date' => $content->submit_date, 'avatar_image' => $avatar_image, 'feedback_image' => $feedback_image, 'delete' => $linkDelete,
         'edit' => $linkEdit);
     }
     // render table

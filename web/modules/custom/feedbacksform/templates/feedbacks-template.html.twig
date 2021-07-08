@@ -1,5 +1,19 @@
 <div class="feedbacks__inner">
   {% for row in rows %}
+    {% if loop.first %}
+      <div class="feedbacks__inner-titles">
+        <div class="feedback-id">ID</div>
+        <div class="feedback-first-name">First name</div>
+        <div class="feedback-avatar">Avatar</div>
+        <div class="feedback-date">Date</div>
+        <div class="feedback-text">Feedback</div>
+        <div class="feedback-image">Feedback image</div>
+        <div class="feedback-email">Email</div>
+        <div class="feedback-phone">Phone</div>
+        <div class="feedback-edit">Edit</div>
+        <div class="feedback-delete">Delete</div>
+      </div>
+    {% endif %}
     <div class="feedbacks__item">
       <div class="feedbacks__item-id">
         {{ row.id }}
