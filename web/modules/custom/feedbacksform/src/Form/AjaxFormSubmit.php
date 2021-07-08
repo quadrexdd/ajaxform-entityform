@@ -138,9 +138,6 @@ class AjaxFormSubmit extends FormBase {
     } else if (strlen($first_name)<=2 || strlen($first_name) >=100) {
       $form_state->setErrorByName('first_name', 'Please, enter correct first name');
     }
-    else {
-      $form_state->clearErrors();
-    }
   }
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $get_current_time=\Drupal::time()->getCurrentTime();
