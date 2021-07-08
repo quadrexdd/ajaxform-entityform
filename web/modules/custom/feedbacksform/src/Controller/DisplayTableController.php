@@ -11,11 +11,13 @@ use Drupal\file\Entity\File;
  * Class DisplayTableController
  * @package Drupal\mymodule\Controller
  */
-class DisplayTableController extends ControllerBase
-{
+class DisplayTableController extends ControllerBase {
 
-  public function index()
-  {
+  /**
+   * @return array
+   * describes how the Database Data should be displayed, returns variable with array of arrays for TWIG
+   */
+  public function index() {
 
     $query = \Drupal::database()->select('feedbacks', 'm');
     $query->fields('m', ['id', 'first_name', 'email_address', 'phone_number', 'feedback', 'submit_date', 'fid_avatar_image', 'fid_feedback_image']);

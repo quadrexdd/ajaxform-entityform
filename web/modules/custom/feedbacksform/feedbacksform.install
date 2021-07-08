@@ -1,10 +1,10 @@
 <?php
 /**
  * create table feedbacks
- */
-/**
  * Implements hook_schema().
  */
+
+
 function feedbacksform_schema() {
   $schema['feedbacks'] = array(
     'fields' => array(

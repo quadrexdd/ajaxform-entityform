@@ -2,6 +2,7 @@
 
 /**
  * Implements hook_theme().
+ * returns rows variable in order to render it in TWIG
  */
 function feedbacksform_theme($existing, $type, $theme, $path) {
   return [

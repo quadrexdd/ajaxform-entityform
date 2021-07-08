@@ -19,11 +19,19 @@ class AjaxFormSubmit extends FormBase {
 
   /**
    * {@inheritdoc}.
+   * return form id
    */
   public function getFormId() {
     return 'ajax_form_submit';
   }
 
+  /**
+   * @inheritDoc
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @return array
+   * define form elements with necessary attributes such as required,allowed tags (XSS security), file validators, ajax Callbacks
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['#prefix'] = '<div id="feedbacks-form-inner">';
     $form['#suffix'] = '</div>';
@@ -90,6 +98,12 @@ class AjaxFormSubmit extends FormBase {
     return $form;
   }
 
+  /**
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @return AjaxResponse
+   * defines AjaxCallback with some validation of the form fields
+   */
   public function submitCallback (array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
     $phone_number = $form_state->getValue('phone_number');
@@ -125,6 +139,13 @@ class AjaxFormSubmit extends FormBase {
     }
     return $response;
   }
+
+  /**
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @inheritDoc
+   * set form errors in ValidateForm method
+   */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $phone_number = $form_state->getValue('phone_number');
     $email_address = $form_state->getValue('email_address');
@@ -139,6 +160,14 @@ class AjaxFormSubmit extends FormBase {
       $form_state->setErrorByName('first_name', 'Please, enter correct first name');
     }
   }
+
+  /**
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @inheritDoc
+   * description of how the form data should be stored in Database, added SubmitDate as element in Database, described FileLoad
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $get_current_time=\Drupal::time()->getCurrentTime();
     date_default_timezone_set('Europe/Kiev');

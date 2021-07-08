@@ -28,6 +28,7 @@ class EditForm extends FormBase {
   }
   /**
    * {@inheritdoc}
+   * build edit-form with DefaultValues by ID condition
    */
   public function buildForm(array $form, FormStateInterface $form_state, $id = NULL) {
     $this->id = $id;
@@ -105,6 +106,7 @@ class EditForm extends FormBase {
   }
   /**
    * {@inheritdoc}
+   * describes how edited data should be updated in DB, added redirect by route after deletion
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $get_current_time=\Drupal::time()->getCurrentTime();

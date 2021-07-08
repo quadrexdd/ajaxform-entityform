@@ -12,6 +12,7 @@ class DeleteForm extends ConfirmFormBase {
 
   /**
    * {@inheritdoc}
+   * make id as public in order to use it in getDescription, buildForm and Submit form methods.
    */
   public function getFormId() {
     return 'delete_form';
@@ -61,6 +62,7 @@ class DeleteForm extends ConfirmFormBase {
 
   /**
    * {@inheritdoc}
+   * describes how the data should be deleted, added messenger text after deletion, added redirect by route after deletion
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $query = \Drupal::database();
