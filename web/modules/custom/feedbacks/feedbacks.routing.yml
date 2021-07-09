@@ -1,0 +1,55 @@
+#Route name can be used in several places (links, redirects, local actions etc.)
+entity.content_entity_feedbacks.canonical:
+  path: '/content_entity_feedbacks/{content_entity_feedbacks}'
+  defaults:
+    #Calls the view controller, defined in the annotation of the content entity
+    _entity_view: 'content_entity_feedbacks'
+    _title: 'Feedbacks content'
+  requirements:
+    # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'content_entity_feedbacks.view'
+
+entity.content_entity_feedbacks.collection:
+  path: '/content_entity_feedbacks/list'
+  defaults:
+    #Calls the list controller, defined in the annotation of the content entity.
+    _entity_list: 'content_entity_feedbacks'
+    _title: 'Feedbacks list'
+  requirements:
+    #Check for permissions
+    _permission: 'view feedbacks entity'
+
+entity.feedbacks.add_form:
+  path: '/content_entity_feedbacks/add'
+  defaults:
+    #Calls the form.add controller, defined in content entity
+    _entity_form: content_entity_feedbacks.add
+    _title: 'Add feedback'
+  requirements:
+    _entity_create_access: 'content_entity_feedbacks'
+
+entity.content_entity_feedbacks.edit_form:
+  path: '/content_entity_feedbacks/{content_entity_feedbacks}/edit'
+  defaults:
+    #Call the form.edit controller, defined in the feedbacks entity
+    _entity_form: content_entity_feedbacks.edit
+    _title: 'Edit feedbacks'
+  requirements:
+    _entity_access: 'content_entity_feedbacks.edit'
+
+entity.content_entity_feedbacks.delete_form:
+  path: '/feedbacks/{content_entity_feedbacks}/delete'
+  defaults:
+    #Call the form.delete controller, defined in the feedbacks entity
+    _entity_form: content_entity_feedbacks.delete
+    _title: 'Delete feedbacks'
+  requiremenets:
+    _entity_access: 'content_entity_feedbacks.delete'
+
+feedbacks.feedbacks_settings:
+  path: 'admin/structure/content_entity_feedbacks_settings'
+  defaults:
+    _form: '\Drupal\feedbacks\Form\FeedbacksSettingsForm'
+    _title: 'Feedbacks settings'
+  requirements:
+    _permission: 'administer feedbacks entity'
