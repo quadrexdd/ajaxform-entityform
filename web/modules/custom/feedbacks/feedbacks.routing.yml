@@ -40,10 +40,10 @@ entity.content_entity_feedbacks.edit_form:
 entity.content_entity_feedbacks.delete_form:
   path: '/feedbacks/{content_entity_feedbacks}/delete'
   defaults:
-    #Call the form.delete controller, defined in the feedbacks entity
+    # Calls the form.delete controller, defined in the feedback entity.
     _entity_form: content_entity_feedbacks.delete
     _title: 'Delete feedbacks'
-  requiremenets:
+  requirements:
     _entity_access: 'content_entity_feedbacks.delete'
 
 feedbacks.feedbacks_settings:
