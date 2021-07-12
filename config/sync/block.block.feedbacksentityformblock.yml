@@ -1,26 +1,26 @@
-uuid: 2c96ca60-a030-4d93-8795-85baeb4a3f4c
+uuid: 9be84dfc-4771-40fd-878d-9fe094a2f77d
 langcode: en
 status: true
 dependencies:
   module:
-    - feedbacksform
+    - feedbacks
     - system
   theme:
     - quadrextheme
-id: feedbacksformblock
+id: feedbacksentityformblock
 theme: quadrextheme
 region: content
 weight: 0
 provider: null
-plugin: feedbacksform_block
+plugin: feedbacksform_entity_block
 settings:
-  id: feedbacksform_block
-  label: 'Feedbacks Form Block'
-  provider: feedbacksform
+  id: feedbacksform_entity_block
+  label: 'Feedbacks entity Form Block'
+  provider: feedbacks
   label_display: '0'
 visibility:
   request_path:
     id: request_path
-    pages: /feedbacksform/ajax-form
+    pages: /content_entity_feedbacks/list
     negate: false
     context_mapping: {  }

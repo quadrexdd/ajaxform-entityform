@@ -1,0 +1,19 @@
+uuid: 1797b182-f0e4-4b01-a517-3b0561f1398d
+langcode: en
+status: true
+dependencies:
+  module:
+    - feedbacks
+    - text
+id: content_entity_feedbacks.field_test_field
+field_name: field_test_field
+entity_type: content_entity_feedbacks
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: 934fdc98-4950-43dd-820a-2519adcba526
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.content_entity_feedbacks.field_test_field
+  module:
+    - feedbacks
+    - text
+id: content_entity_feedbacks.content_entity_feedbacks.field_test_field
+field_name: field_test_field
+entity_type: content_entity_feedbacks
+bundle: content_entity_feedbacks
+label: 'Test field'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
