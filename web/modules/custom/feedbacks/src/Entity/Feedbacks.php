@@ -19,65 +19,15 @@ use Drupal\user\UserInterface;
  *
  * @ingroup feedbacks
  *
- * This is the main definition of the entity type. From it, an entityType is
- * derived. The most important properties in this example are listed below.
- *
- * id: The unique identifier of this entityType. It follows the pattern
- * 'moduleName_xyz' to avoid naming conflicts.
- *
- * label: Human readable name of the entity type.
- *
- * handlers: Handler classes are used for different tasks. You can use
- * standard handlers provided by D8 or build your own, most probably derived
- * from the standard class. In detail:
- *
- * - view_builder: we use the standard controller to view an instance. It is
- *   called when a route lists an '_entity_view' default for the entityType
- *   (see routing.yml for details. The view can be manipulated by using the
- *   standard drupal tools in the settings.
- *
- * - list_builder: We derive our own list builder class from the
- *   entityListBuilder to control the presentation.
- *   If there is a view available for this entity from the views module, it
- *   overrides the list builder. @todo: any view? naming convention?
- *
- * - form: We derive our own forms to add functionality like additional fields,
- *   redirects etc. These forms are called when the routing list an
- *   '_entity_form' default for the entityType. Depending on the suffix
- *   (.add/.edit/.delete) in the route, the correct form is called.
- *
- * - access: Our own accessController where we determine access rights based on
- *   permissions.
- *
- * More properties:
- *
- *  - base_table: Define the name of the table used to store the data. Make
- *   sure
- *    it is unique. The schema is automatically determined from the
- *    BaseFieldDefinitions below. The table is automatically created during
- *    installation.
- *
- *  - fieldable: Can additional fields be added to the entity via the GUI?
- *    Analog to content types.
- *
- *  - entity_keys: How to access the fields. Analog to 'nid' or 'uid'.
- *
- *  - links: Provide links to do standard tasks. The 'edit-form' and
- *    'delete-form' links are added to the list built by the
- *    entityListController. They will show up as action buttons in an
- *   additional
- *    column.
- *
- * There are many more properties to be used in an entity type definition. For
- * a complete overview, please refer to the '\Drupal\Core\Entity\EntityType'
- * class definition.
- *
- * The following construct is the actual definition of the entity type which
- * is read and cached. Don't forget to clear cache after changes.
- *
  * @ContentEntityType(
  *   id = "content_entity_feedbacks",
  *   label = @Translation("Feedbacks entity"),
+ *   base_table = "feedbacks_entity",
+ *   entity_keys = {
+ *     "id" = "id",
+ *     "label" = "name",
+ *     "uuid" = "uuid"
+ *   },
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" =
@@ -90,14 +40,8 @@ use Drupal\user\UserInterface;
  *     },
  *     "access" = "Drupal\feedbacks\FeedbacksAccessControlHandler",
  *   },
- *   base_table = "feedbacks_entity",
  *   admin_permission = "administer feedbacks entity",
  *   fieldable = TRUE,
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "name",
- *     "uuid" = "uuid"
- *   },
  *   links = {
  *     "canonical" =
  *   "/content_entity_feedbacks/{content_entity_feedbacks}",
@@ -286,22 +230,22 @@ class Feedbacks extends ContentEntityBase implements FeedbacksInterface {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-    $fields['feedback_text'] = BaseFieldDefinition::create('text_long')
+    $fields['feedback_text'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Feedback text'))
       ->setDescription(t('The feedback text of the feedback entity'))
       ->setRequired(TRUE)
       ->setSettings([
         'default_value' => '',
-        'max_length' => 100,
+        'max_length' => 260,
         'text_processing' => 0,
       ])
       ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'text_default',
+        'label' => 'hidden',
+        'type' => 'string',
         'weight' => -3,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'text_default',
+        'type' => 'string_textfield',
         'weight' => -3,
       ])
       ->setDisplayConfigurable('form', TRUE)
@@ -310,17 +254,18 @@ class Feedbacks extends ContentEntityBase implements FeedbacksInterface {
       ->setLabel(t('Avatar image'))
       ->setDescription(t('The Avatar image of the feedback entity'))
       ->setSettings([
-        'default_value' => '',
-        'max_length' => 100,
-        'text_processing' => 0,
+        'file_directory' => 'avatar_images',
+        'alt_field_required' => FALSE,
+        'file_extensions' => 'png jpg jpeg',
       ])
       ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'image',
+        'label' => 'hidden',
+        'type' => 'default',
         'weight' => -3,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'image',
+        'label' => 'hidden',
+        'type' => 'image_image',
         'weight' => -3,
       ])
       ->setDisplayConfigurable('form', TRUE)
@@ -329,18 +274,19 @@ class Feedbacks extends ContentEntityBase implements FeedbacksInterface {
       ->setLabel(t('Feedback image'))
       ->setDescription(t('The feedback image of the feedback entity'))
       ->setSettings([
-        'default_value' => '',
-        'max_length' => 100,
-        'text_processing' => 0,
+        'file_directory' => 'feedback_images',
+        'alt_field_required' => FALSE,
+        'file_extensions' => 'png jpg jpeg',
       ])
       ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'image',
-        'weight' => -3,
+        'label' => 'hidden',
+        'type' => 'default',
+        'weight' => -2,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'image',
-        'weight' => -3,
+        'label' => 'hidden',
+        'type' => 'image_image',
+        'weight' => -2,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);

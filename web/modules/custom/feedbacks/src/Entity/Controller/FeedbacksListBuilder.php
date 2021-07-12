@@ -4,6 +4,7 @@ namespace Drupal\feedbacks\Entity\Controller;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
+use Drupal\file\Entity\File;
 
 /**
  * Provides a list controller for content_entity_feedbacks entity.
@@ -21,10 +22,7 @@ class FeedbacksListBuilder extends EntityListBuilder {
    */
   public function render() {
     $build['description'] = [
-      '#markup' => $this->t('Content Entity implements a feedback model. These feedbacks are fieldable entities. You can manage the fields on the <a href="@adminlink">Feedbacks admin page</a>.', [
-        '@adminlink' => \Drupal::urlGenerator()
-          ->generateFromRoute('feedbacks.feedbacks_settings'),
-      ]),
+      '#markup' => $this->t('Here you may see all feedback entities added on the website'),
     ];
     $build['table'] = parent::render();
     return $build;
@@ -56,15 +54,21 @@ class FeedbacksListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\feedbacks\Entity\Feedbacks */
+    if (!is_null($entity->avatar_image->target_id)) {
+      $avatar_image = File::load($entity->avatar_image->target_id)->url();
+    }
+    elseif (!is_null($entity->feedback_image->target_id)) {
+      $feedback_image = File::load($entity->feedback_image->target_id)->url();
+    }
     $row['id'] = $entity->id();
     $row['first_name'] = $entity->first_name->value;
     $row['email_address'] = $entity->email_address->value;
     $row['phone_number'] = $entity->phone_number->value;
-    $row['feedback_text'] = $entity->feedback_text->value;
-    $row['avatar_image'] = $entity->avatar_image->value;
-    $row['feedback_image'] = $entity->feedback_image->value;
-    $row['created'] = $entity->created->value;
-    $row['changed'] = $entity->changed->value;
+    $row['feedback_text'] = strip_tags($entity->feedback_text->value);
+    $row['avatar_image'] = $avatar_image;
+    $row['feedback_image'] = $feedback_image;
+    $row['created'] = date('m/d/Y H:i:s', $entity->created->value);
+    $row['changed'] = date('m/d/Y H:i:s', $entity->changed->value);
     return $row + parent::buildRow($entity);
   }
 
