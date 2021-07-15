@@ -6,34 +6,33 @@
 
 namespace Drupal\feedbacksform\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Url;
 use Drupal\file\Entity\File;
-use Drupal\Core\Database\Database;
 
-
-/**
- * Form with modal window.
- */
 class AjaxFormSubmit extends FormBase {
 
   /**
    * {@inheritdoc}.
+   * return form id
    */
   public function getFormId() {
     return 'ajax_form_submit';
   }
 
+  /**
+   * @inheritDoc
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @return array
+   * define form elements with necessary attributes such as required,allowed tags (XSS security), file validators, ajax Callbacks
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $conn = Database::getConnection();
-    $data = array();
-    if(isset($_GET['id'])) {
-      $query = $conn->select('feedbacks', 'm')
-        ->condition('id', $_GET['id'])
-        ->fields('m');
-      $data = $query->execute()->fetchAssoc();
-    }
     $form['#prefix'] = '<div id="feedbacks-form-inner">';
     $form['#suffix'] = '</div>';
     $form['first_name'] = [
@@ -41,35 +40,33 @@ class AjaxFormSubmit extends FormBase {
       '#title' => $this->t('First name'),
       '#desctiption' => $this->t('Enter your First name.'),
       '#required' => TRUE,
-      '#default_value' => (isset($data['first_name'])) ? $data['first_name'] : '',
       '#allowed_tags' => Xss::getHtmlTagList(),
+      '#suffix' => '<div class="firstname-validation-message"></div>'
     ];
     $form['email_address'] = [
       '#type' => 'email',
       '#title' => $this->t('E-mail'),
       '#description' => $this->t('Please enter your e-mail address'),
       '#required' => TRUE,
-      '#default_value' => (isset($data['email_address'])) ? $data['email_address'] : '',
+      '#suffix' => '<div class="email-validation-message"></div>'
     ];
     $form['phone_number'] = [
       '#type' => 'tel',
       '#title' => $this->t('Phone number'),
       '#description' => $this->t('Please, enter your phone number'),
       '#required' => TRUE,
-      '#default_value' => (isset($data['phone_number'])) ? $data['phone_number'] : '',
       '#maxlength' => '10',
+      '#suffix' => '<div class="phone-validation-message"></div>'
     ];
     $form['feedback'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Feedback'),
       '#description' => $this->t('Please, enter your feedback'),
       '#required' => TRUE,
-      '#default_value' => (isset($data['feedback'])) ? $data['feedback'] : '',
       '#allowed_tags' => Xss::getHtmlTagList(),
     ];
     $form['avatar_image'] = [
       '#type' => 'managed_file',
-      '#default_value' => (isset($data['fid_avatar_image'])) ? $data['fid_avatar_image'] : '',
       '#title' => $this->t('Avatar image'),
       '#description' => $this->t('You may upload your avatar image'),
       '#upload_location' => 'public://',
@@ -80,7 +77,6 @@ class AjaxFormSubmit extends FormBase {
     ];
     $form['feedback_image'] = [
       '#type' => 'managed_file',
-      '#default_value' => (isset($data['fid_feedback_image'])) ? $data['fid_feedback_image'] : '',
       '#title' => $this->t('Feedback image'),
       '#description' => $this->t('You may upload your feedback image'),
       '#upload_location' => 'public://',
@@ -95,16 +91,83 @@ class AjaxFormSubmit extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Submit Feedback'),
+      '#ajax' => [
+        'callback' => '::submitCallback',
+      ],
     ];
     return $form;
   }
 
-  public function validateForm(array &$form, FormStateInterface $form_state) {
+  /**
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @return AjaxResponse
+   * defines AjaxCallback with some validation of the form fields
+   */
+  public function submitCallback (array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+    $phone_number = $form_state->getValue('phone_number');
+    $pattern_phone = preg_match("/^[0-9]{10}$/", $phone_number);
+    if (!$pattern_phone) {
+      $response->addCommand(new HtmlCommand('.phone-validation-message', 'Your phone is not valid!'));
+    }
+    else {
+      $response->addCommand(new HtmlCommand('.phone-validation-message', ''));
+    }
+    $email_address = $form_state->getValue('email_address');
+    $pattern_mail = preg_match("/[a-zA-Z0-9 +-]+@[a-zA-Z0-9 +-]+\.[a-zA-Z0-9]+/", $email_address);
+    if (!$pattern_mail) {
+      $response->addCommand(new HtmlCommand('.email-validation-message', 'Your email is not valid!'));
+    }
+    else {
+      $response->addCommand(new HtmlCommand('.email-validation-message', ''));
+    }
     $first_name=$form_state->getValue('first_name');
-    if(strlen($first_name) <=2 && strlen($first_name)>= 100) {
-      $form_state->setErrorByName('first_name', 'Enter correct first name');
+    if (strlen($first_name)<=2 || strlen($first_name) >=100) {
+      $response->addCommand(new HtmlCommand('.firstname-validation-message', 'First name should contain >2 and <100 characters'));
+    }
+    else {
+      $response->addCommand(new HtmlCommand('.firstname-validation-message', ''));
+    }
+    switch ($form_state->hasAnyErrors()) {
+      case true:
+        break;
+      case false:
+        $url = Url::fromRoute('feedbacksform.ajax_form_submit');
+        $command = new RedirectCommand($url->toString());
+        $response->addCommand($command);
+    }
+    return $response;
+  }
+
+  /**
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @inheritDoc
+   * set form errors in ValidateForm method
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $phone_number = $form_state->getValue('phone_number');
+    $email_address = $form_state->getValue('email_address');
+    $first_name=$form_state->getValue('first_name');
+    $pattern_phone = preg_match("/^[0-9]{10}$/", $phone_number);
+    $pattern_mail = preg_match("/[a-zA-Z0-9 +-]+@[a-zA-Z0-9 +-]+\.[a-zA-Z0-9]+/", $email_address);
+    if (!$pattern_phone) {
+      $form_state->setErrorByName('phone_number', 'Please, enter correct phone');
+    } else if(!$pattern_mail) {
+      $form_state->setErrorByName('email_address', 'Please, enter correct email');
+    } else if (strlen($first_name)<=2 || strlen($first_name) >=100) {
+      $form_state->setErrorByName('first_name', 'Please, enter correct first name');
     }
   }
+
+  /**
+   * @param array $form
+   * @param FormStateInterface $form_state
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @inheritDoc
+   * description of how the form data should be stored in Database, added SubmitDate as element in Database, described FileLoad
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $get_current_time=\Drupal::time()->getCurrentTime();
     date_default_timezone_set('Europe/Kiev');
@@ -130,14 +193,7 @@ class AjaxFormSubmit extends FormBase {
       $feedback_image_file->setPermanent();
       $feedback_image_file->save();
     }
-    if (isset($_GET['id'])) {
-      // update data in database
-      \Drupal::database()->update('feedbacks')->fields($data)->condition('id', $_GET['id'])->execute();
-    } else {
-      // insert data to database
       \Drupal::database()->insert('feedbacks')->fields($data)->execute();
-    }
-    \Drupal::database()->insert('feedbacks')->fields($data)->execute();
-    \Drupal::messenger()->addMessage('Thank you for feedback!');
+      \Drupal::messenger()->addMessage('Thank you for feedback!');
   }
 }

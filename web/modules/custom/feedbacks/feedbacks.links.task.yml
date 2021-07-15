@@ -1,0 +1,22 @@
+#Define the 'local' links for the module
+feedbacks.settings_tab:
+  route_name: feedbacks.feedbacks_settings
+  title: Settings
+  base_route: feedbacks.feedbacks_settings
+
+feedbacks.view:
+  route_name: entity.content_entity_feedbacks.canonical
+  base_route: entity.content_entity_feedbacks.canonical
+  title: View
+
+feedbacks.page_edit:
+  route_name: entity.content_entity_feedbacks.edit_form
+  base_route: entity.content_entity_feedbacks.canonical
+  title: Edit
+
+feedbacks.delete_confirm:
+  route_name: entity.content_entity_feedbacks.delete_form
+  base_route: entity.content_entity_feedbacks.canonical
+  title: Delete
+  weight: 10
+

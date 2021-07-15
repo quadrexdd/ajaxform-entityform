@@ -13,10 +13,10 @@ feedbacksform.delete_form:
     _title: 'DeleteForm'
   requirements:
     _role: 'administrator'
-feedbacksform.edit_feedback_ajax:
-  path: '/ajax/feedbacks/feedback/edit/{id}'
+feedbacksform.edit_form:
+  path: '/feedbacksform/ajax-form/{id}/edit'
   defaults:
-    _controller: '\Drupal\feedbacksform\Controller\DisplayTableController::editFeedbackAjax'
-    _title: 'Edit Feedback'
+    _form: '\Drupal\feedbacksform\Form\EditForm'
+    _title: 'EditForm'
   requirements:
     _role: 'administrator'

@@ -5,7 +5,7 @@ namespace Drupal\feedbacksform\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 
 /**
- * Provides a 'AjaxFormSubmit' block.
+ * Provides an 'AjaxFormSubmit' block.
  *
  * @Block (
  *   id = "feedbacksform_block",

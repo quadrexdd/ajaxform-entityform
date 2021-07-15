@@ -1,0 +1,5 @@
+name: 'feedbacks'
+type: module
+description: 'Feedback form using Entity API'
+core: 8.x
+package: 'Custom'

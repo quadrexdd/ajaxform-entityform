@@ -1,0 +1,46 @@
+<div class="feedbacks__inner">
+  {% for row in rows %}
+    {% if loop.first %}
+      <div class="feedbacks__inner-titles">
+        <div class="feedback-id">ID</div>
+        <div class="feedback-first-name">First name</div>
+        <div class="feedback-avatar">Avatar</div>
+        <div class="feedback-date">Date</div>
+        <div class="feedback-text">Feedback</div>
+        <div class="feedback-image">Feedback image</div>
+        <div class="feedback-email">Email</div>
+        <div class="feedback-phone">Phone</div>
+        {% if user.hasPermission('Administer content') %}
+        <div class="feedback-edit">Edit</div>
+        <div class="feedback-delete">Delete</div>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="feedbacks__item">
+      <div class="feedbacks__item-id">
+        {{ row.id }}
+      </div>
+      <div class="feedbacks__item-user-data">
+        {{ row.first_name }}
+        <img src="{{ row.avatar_image }}" alt="avatar" width="100px" height="100px">
+        {{ row.submit_date }}
+      </div>
+      <div class="feedbacks__item-content">
+        {{ row.feedback }}
+        {% if row.feedback_image is defined and row.feedback_image is not null %}
+          <img src="{{ row.feedback_image }}" alt="feedback image" width="100px" height="100px">
+        {% endif %}
+      </div>
+      <div class="feedbacks__item-contact-info">
+        {{ row.email_address }}
+        {{ row.phone_number }}
+      </div>
+      {% if user.hasPermission('Administer content') %}
+        <div class="feedbacks__item-crud">
+          {{ row.edit }}
+          {{ row.delete }}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>

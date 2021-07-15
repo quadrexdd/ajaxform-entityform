@@ -1,0 +1,9 @@
+view feedbacks entity:
+  title: 'View feedback entity'
+  desctiption: 'Allows to view feedbacks entity'
+edit feedbacks entity:
+  title: 'Edit feedback entity'
+  desctiption: 'Allows to edit feedbacks entity'
+delete feedbacks entity:
+  title: 'Delete feedback entity'
+  desctiption: 'Allows to delete feedbacks entity'

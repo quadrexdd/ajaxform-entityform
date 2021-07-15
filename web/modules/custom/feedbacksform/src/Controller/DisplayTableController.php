@@ -8,62 +8,50 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 
 /**
  * Class DisplayTableController
  * @package Drupal\mymodule\Controller
  */
-class DisplayTableController extends ControllerBase
-{
+class DisplayTableController extends ControllerBase {
 
-  public function index()
-  {
-    //create table header
-    $header_table = array(
-      'id' => t('ID'),
-      'first_name' => t('First name'),
-      'email' => t('Email'),
-      'phone' => t('Phone'),
-      'feedback' => t('Feedback text'),
-      'date' => t('Submit date'),
-      'avatar' => t('Avatar image'),
-      'feedback_image' => t ('Feedback image'),
-      'delete' => t('Delete'),
-      'edit' => t('Edit'),
-    );
+  /**
+   * @return array
+   * describes how the Database Data should be displayed, returns variable with array of arrays for TWIG
+   */
+  public function index() {
+
     $query = \Drupal::database()->select('feedbacks', 'm');
     $query->fields('m', ['id', 'first_name', 'email_address', 'phone_number', 'feedback', 'submit_date', 'fid_avatar_image', 'fid_feedback_image']);
-    $results = $query->execute()->fetchAll();
+    $result = $query->execute()->fetchAllAssoc('id');
     $rows = array();
-    foreach ($results as $data) {
-      $url_delete = Url::fromRoute('feedbacksform.delete_form', ['id' => $data->id], []);
-      $url_edit = Url::fromRoute('feedbacksform.ajax_form_submit', ['id' => $data->id], []);
+    foreach ($result as $row => $content) {
+      $url_delete = Url::fromRoute('feedbacksform.delete_form', ['id' => $content->id], []);
+      $url_edit = Url::fromRoute('feedbacksform.edit_form', ['id' => $content->id], []);
       $linkDelete = Link::fromTextAndUrl('Delete', $url_delete);
       $linkEdit = Link::fromTextAndUrl('Edit', $url_edit);
-
-      //get data
-      $rows[] = array(
-        'id' => $data->id,
-        'first_name' => $data->first_name,
-        'email' => $data->email_address,
-        'phone_number' => $data->phone_number,
-        'feedback' => $data->feedback,
-        'submit_date' => $data->submit_date,
-        'avatar_image'=> $data->fid_avatar_image,
-        'feedback_image'=>$data->fid_feedback_image,
-        'delete' => $linkDelete,
-        'edit' =>  $linkEdit,
-      );
-
+      if ($content->fid_avatar_image) {
+        $avatar_image = File::load($content->fid_avatar_image)->url();
+      }
+      else {
+        $avatar_image = 'http://custom-form.localhost/sites/default/files/l60Hf.png';
+      }
+      if ($content->fid_feedback_image) {
+        $feedback_image = File::load($content->fid_feedback_image)->url();
+      }
+      else {
+        $feedback_image = null;
+      }
+      $rows[] = array('id' => $content->id, 'first_name' => $content->first_name, 'email_address' => $content->email_address, 'phone_number' => $content->phone_number,
+        'feedback' => $content->feedback, 'submit_date' => $content->submit_date, 'avatar_image' => $avatar_image, 'feedback_image' => $feedback_image, 'delete' => $linkDelete,
+        'edit' => $linkEdit);
     }
     // render table
-    $form['table'] = [
-      '#type' => 'table',
-      '#header' => $header_table,
+    return [
+      '#theme' => 'feedbacks_template',
       '#rows' => $rows,
-      '#empty' => t('No data found, sorry bro!'),
     ];
-    return $form;
   }
   public function editFeedbackAjax($id) {
 

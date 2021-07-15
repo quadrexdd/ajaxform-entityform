@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Contains feedbacks.module.
+ */
+/**
+ * Implements hook_theme().
+ */
+function feedbacks_theme($existing, $type, $theme, $path) {
+  return [
+    'feedbacks_entity_template' => [
+      'variables' => ['row' => 'row'],
+    ],
+  ];
+}
