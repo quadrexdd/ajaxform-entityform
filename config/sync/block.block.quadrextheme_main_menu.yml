@@ -1,4 +1,4 @@
-uuid: 497c948a-327c-4c35-8dc5-eda0c10df366
+uuid: 5d400548-b3d9-410a-b620-d872c9c396fa
 langcode: en
 status: true
 dependencies:
@@ -9,11 +9,11 @@ dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: ERtUwuUKdqiRLiXjBoV7gcIIZgt2IdqWBzqsqtm63w4
+  default_config_hash: ChCx7DYNUrPTt5uiRdQAPDKJQMc-_SyAQTrZh8H0o-c
 id: quadrextheme_main_menu
 theme: quadrextheme
-region: navigation_collapsible
-weight: 10
+region: navigation
+weight: 0
 provider: null
 plugin: 'system_menu_block:main'
 settings:
@@ -22,6 +22,6 @@ settings:
   provider: system
   label_display: '0'
   level: 1
-  depth: 2
+  depth: 1
   expand_all_items: false
 visibility: {  }

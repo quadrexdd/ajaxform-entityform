@@ -1,4 +1,4 @@
-uuid: a380ad3f-68ba-419c-8041-83cb5ba589d5
+uuid: 8c8ed307-aa85-4327-ae5c-2799b166d889
 langcode: en
 status: true
 dependencies:
@@ -7,10 +7,10 @@ dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: Cy3vkpYrD1O5JG-BeEnokF0bByHYDEa8CBfWivB4_SQ
+  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
 id: quadrextheme_branding
 theme: quadrextheme
-region: navigation
+region: header
 weight: 0
 provider: null
 plugin: system_branding_block
@@ -21,5 +21,5 @@ settings:
   label_display: '0'
   use_site_logo: true
   use_site_name: true
-  use_site_slogan: false
+  use_site_slogan: true
 visibility: {  }

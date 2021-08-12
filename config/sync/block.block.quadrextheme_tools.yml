@@ -1,4 +1,4 @@
-uuid: 56ca959d-044b-49f7-a93a-61fa8f5b92c7
+uuid: 9ca2648f-fa5e-4aac-a3bc-80bca7deda33
 langcode: en
 status: true
 dependencies:
@@ -9,10 +9,10 @@ dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: SrPItPkAevw9hGX_v5AfsVyw6vkoog7ZVLSJYqwsBHc
+  default_config_hash: rH6PpAn7-RScha1rGkohGAYSSh_1OVeZzioJPzPw6O4
 id: quadrextheme_tools
 theme: quadrextheme
-region: sidebar_second
+region: sidebar_first
 weight: 0
 provider: null
 plugin: 'system_menu_block:tools'

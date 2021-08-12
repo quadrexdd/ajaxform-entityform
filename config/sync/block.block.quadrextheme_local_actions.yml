@@ -1,15 +1,15 @@
-uuid: 8e526469-d163-467a-957b-c674b4bbb194
+uuid: c28f3d32-8343-45ce-8896-6636e50c15a3
 langcode: en
 status: true
 dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: ffxthelqQF8xcr4GTG4HlaNNsluiHftN0pujmQpW0bQ
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
 id: quadrextheme_local_actions
 theme: quadrextheme
-region: header
-weight: 20
+region: content
+weight: -20
 provider: null
 plugin: local_actions_block
 settings:

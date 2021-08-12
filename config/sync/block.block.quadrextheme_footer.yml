@@ -1,6 +1,6 @@
-uuid: 839517c0-aa30-4c2b-b608-7a86591a07db
+uuid: 523ed32e-7e9e-45ef-b303-f7500db1874d
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.footer
@@ -9,10 +9,10 @@ dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: 4VDn3bLy009pYlPUWQBHaaGVJu8FPnxNfr2DYrAnNHI
+  default_config_hash: 8zRjTNbfNAJ94lQpZDu6MkyD87GYJ2zpH9VQPVmRbcM
 id: quadrextheme_footer
 theme: quadrextheme
-region: footer
+region: navigation
 weight: 0
 provider: null
 plugin: 'system_menu_block:footer'

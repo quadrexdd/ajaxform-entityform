@@ -23,6 +23,7 @@
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
         "drupal/devel_entity_updates": "^3.0",
+        "drush/drush": "^10.5",
         "symfony/property-access": "^3.2"
     },
     "conflict": {

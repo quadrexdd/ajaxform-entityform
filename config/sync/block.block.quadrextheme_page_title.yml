@@ -1,15 +1,15 @@
-uuid: 04b718d0-6e01-48de-9a4e-134f445d4660
+uuid: 86d206f4-cb53-4c41-beef-defc72de0449
 langcode: en
 status: true
 dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: 1TQP4b3ZnlzvIH9bj6cpCz_SyUHdJjLQkZnHpikjjhw
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
 id: quadrextheme_page_title
 theme: quadrextheme
-region: header
-weight: 0
+region: content
+weight: -50
 provider: null
 plugin: page_title_block
 settings:

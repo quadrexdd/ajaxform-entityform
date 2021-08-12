@@ -1,4 +1,4 @@
-uuid: 31086ddc-92e6-4d11-b417-0dab54e772c0
+uuid: c7baf0a1-55ff-460f-9f68-6d72c43b8c81
 langcode: en
 status: true
 dependencies:
@@ -7,10 +7,10 @@ dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
 id: quadrextheme_help
 theme: quadrextheme
-region: help
+region: content
 weight: -30
 provider: null
 plugin: help_block

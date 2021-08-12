@@ -55,10 +55,10 @@ class FeedbacksListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\feedbacks\Entity\Feedbacks */
     if (!is_null($entity->avatar_image->target_id)) {
-      $avatar_image = File::load($entity->avatar_image->target_id)->url();
+      $avatar_image = File::load($entity->avatar_image->target_id)->getFileUri();
     }
-    elseif (!is_null($entity->feedback_image->target_id)) {
-      $feedback_image = File::load($entity->feedback_image->target_id)->url();
+    if (!is_null($entity->feedback_image->target_id)) {
+      $feedback_image = File::load($entity->feedback_image->target_id)->getFileUri();
     }
     $row['id'] = $entity->id();
     $row['first_name'] = $entity->first_name->value;

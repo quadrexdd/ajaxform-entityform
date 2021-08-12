@@ -1,4 +1,4 @@
-uuid: e12750f4-46c6-4c5e-8cfb-05d76c7b6c49
+uuid: 8d5c4169-e232-475c-b350-001a193f7453
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   theme:
     - quadrextheme
 _core:
-  default_config_hash: wDR9JKEATSWldBjw8du8s3G2zjEYeQf88nlld11hMLo
+  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
 id: quadrextheme_breadcrumbs
 theme: quadrextheme
-region: header
-weight: -100
+region: navigation
+weight: 0
 provider: null
 plugin: system_breadcrumb_block
 settings:
